@@ -1,4 +1,6 @@
-
+/*
+ * Jack Price
+ */
 public interface Being {
 	/**
 	 * Every inhabitant on GridWorld must have a name given to them at birth or
