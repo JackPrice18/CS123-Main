@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -19,41 +20,113 @@ public class Main {
 	}
 
 	private static void setPram() {
-		
+		boolean done = false;
 		String answer;
+
+			printSetPram();
+
+			do {
+				if (done == true) {
+					return;
+				}
+				answer = scan.next().toUpperCase();
+				switch (answer) {
+				case "C":
+					changeSettings();
+					done = true;
+					break;
+
+				case "N":
+
+					break;
+
+				default:
+					System.out.println("\n" + answer + " - Is an invalid entry please try again \n");
+				}
+			} while (done || !answer.equals("N"));
+
 		
+		// GridWorld gridWorld = new GridWorld(GRID_SIZE_X, GRID_SIZE_Y,
+		// GAME_MAX_LENGTH, WAIT_TIME);
+	}
+
+	/**
+	 * 
+	 */
+	private static void printSetPram() {
 		System.out.println("===========================");
 		System.out.println("Welcome to Bonks and Zaps!");
 		System.out.println("===========================\n");
-		
+
 		System.out.println("Here you have the chance to change the setting of the game if you wish.\n"
 				+ "If you want to change the settings then please press C if not press N and the game will load with "
 				+ "the default setting of :\n ");
-		
+
 		System.out.println("- The world size is 20x20.");
 		System.out.println("- The game cycles every second.");
 		System.out.println("- The lenght of the game is 60 seconds.\n");
+
+		System.out.println("Please press C to change the settings or N to keep them as default.");
+	}
+
+	private static void changeSettings() {
+		boolean valid;
+
+		System.out.println("\n=====================");
+		System.out.println("Settings Change Menu");
+		System.out.println("=====================\n");
+
+		System.out.println("The settings to change:\n");
+
+		do {
+			valid = false;
+			System.out.println("Please enter the world size you want - Currently set at 20 (20x20)");
+			try {
+				int change = scan.nextInt();
+				GRID_SIZE_X = change;
+				GRID_SIZE_Y = change;
+				System.out.println("The world size has been set to " + GRID_SIZE_Y + " (" + GRID_SIZE_Y + "x"
+						+ GRID_SIZE_X + ")\n");
+				valid = true;
+			} catch (InputMismatchException e) {
+				System.err.println("Not a number, please try again. \n");
+				scan.next();
+			}
+		} while (!valid);
+
+		do {
+			valid = false;
+			System.out.println("Please enter how long you want the gmae to run seconds - Currently set at 60");
+			try {
+				int change = scan.nextInt();
+				GAME_MAX_LENGTH = change;
+				System.out.println("The game length has been set to " + GAME_MAX_LENGTH + " seconds\n");
+				valid = true;
+			} catch (InputMismatchException e) {
+				System.err.println("Not a number, please try again. \n");
+				scan.next();
+			}
+		} while (!valid);
+
+		do {
+			valid = false;
+			System.out.println(
+					"Please enter how long you want a cycle to be in milliseconds - Currently set at 1000 (1 second)");
+			try {
+				int change = scan.nextInt();
+				WAIT_TIME = change;
+				System.out.println("The cycle length has been set to " + WAIT_TIME + " milliseconds ("
+						+ WAIT_TIME / 1000 + " seconds)\n");
+				valid = true;
+			} catch (InputMismatchException e) {
+				System.err.println("Not a number, please try again. \n");
+				scan.next();
+			}
+		} while (!valid);
+
+		System.out.println("Settings have been changed! The game will start now\n\n");
 		
-		System.out.println("Please press C to chanfe the settings or N to keep them as default.");
-		
-		do{
-			answer = scan.next().toUpperCase();
-			switch(answer){
-			case "C":
-				//changeSettings();
-				break;
-			
-			case "N":
-				
-				break;
-				
-			default:
-				System.out.println("\n" + answer + " - Is an invalid entry please try again \n");
-		}
-		}while(!answer.equals("N"));
-		
-		
-		GridWorld gridWorld = new GridWorld(GRID_SIZE_X, GRID_SIZE_Y, GAME_MAX_LENGTH, WAIT_TIME);
+		return;
 	}
 
 	private void runMenu() throws IOException {
@@ -66,10 +139,6 @@ public class Main {
 			switch (answer) {
 			case "P":
 				// thing
-				break;
-
-			case "O":
-				// options();
 				break;
 
 			case "Q":
@@ -121,11 +190,10 @@ public class Main {
 	}
 
 	private void printMenu() {
-		System.out.println("======================");
-		System.out.println("Welcome to !");
-		System.out.println("======================\n");
+		System.out.println("\n==========================");
+		System.out.println("Welcome to Bonks and Zaps!");
+		System.out.println("==========================\n");
 		System.out.println("P - Play game");
-		System.out.println("O - Options");
 		System.out.println("Q - Quit");
 	}
 
